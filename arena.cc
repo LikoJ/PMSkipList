@@ -2,16 +2,15 @@
 
 namespace PMSkiplist {
     static const size_t pmem_len = 80 * 1024 * 1024 * 1024;
-    static const string path = "/mnt/persist-memory/pmem_fs_lhd"
+    static const string path = "/mnt/persist-memory/pmem_fs_lhd/test.pool"
 
-Arena::Arena() {
+Arena::Arena(): used(0) {
     if ((pmemaddr = pmem_map_file(path.c_str(), pmem_len, PMEM_FILE_CREATE,
                                   0666, &mapped_len, &is_pmem)) == NULL) {
         perror("pmem_map_file");
         exit(1);
     }
     free = pmem_len;
-    used = mapped_len;
 }
 
 Arena::~Arena() {
