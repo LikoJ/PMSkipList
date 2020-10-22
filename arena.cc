@@ -34,9 +34,10 @@ char *Arena::Allocate(size_t bytes) {
         used += bytes;
     }
     return result;
+}
 
 char *Arena::GetRoot() {
     return pmemaddr;
 }
-}
+
 }   //PMSkiplist
