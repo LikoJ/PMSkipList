@@ -17,7 +17,7 @@ class Arena {
 public:
     Arena();
     ~Arena();
-    void Sync();
+    void Sync(void *start, size_t len);
     void* Allocate(size_t bytes);
 
 private:
