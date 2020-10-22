@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <libpmem.h>
+#include <cstdint>
 #include <string>
 
 namespace PMSkiplist {
@@ -29,4 +30,4 @@ private:
 };
 
 }   // PMSkiplist
-#endif //PMSKIPLIST_ARENA_H
+#endif // PMSKIPLIST_ARENA_H
