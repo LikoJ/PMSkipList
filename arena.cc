@@ -1,8 +1,8 @@
 #include "arena.h"
 
 namespace PMSkiplist {
-    static const size_t pmem_len = 80 * 1024 * 1024 * 1024;
-    static const string path = "/mnt/persist-memory/pmem_fs_lhd/test.pool"
+    static const size_t pmem_len = 80L * 1024 * 1024 * 1024;
+    static const std::string path = "/mnt/persist-memory/pmem_fs_lhd/test.pool";
 
 Arena::Arena(): used(0) {
     if ((pmemaddr = pmem_map_file(path.c_str(), pmem_len, PMEM_FILE_CREATE,
@@ -18,16 +18,8 @@ Arena::~Arena() {
     pmemaddr = NULL;
 }
 
-void Arena::Sync() {
-    if (is_pmem) {
-        pmem_persist(pmemaddr, mapped_len);
-    } else {
-        pmem_msync(pmemaddr, mapped_len);
-    }
-}
-
-char *Arena::Allocate(size_t bytes) {
-    char *result = NULL;
+void *Arena::Allocate(size_t bytes) {
+    void *result = NULL;
     if (free >= bytes) {
         free -= bytes;
         result = pmemaddr + used;
@@ -36,8 +28,12 @@ char *Arena::Allocate(size_t bytes) {
     return result;
 }
 
-char *Arena::GetRoot() {
-    return pmemaddr;
+void Arena::Sync(void *start, size_t len) {
+    if (is_pmem) {
+        pmem_persist(start, len);
+    } else {
+        pmem_msync(start, len);
+    }
 }
 
 }   //PMSkiplist

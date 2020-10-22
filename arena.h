@@ -18,11 +18,10 @@ public:
     Arena();
     ~Arena();
     void Sync();
-    char* Allocate(size_t bytes);
-    char* GetRoot();
+    void* Allocate(size_t bytes);
 
 private:
-    char *pmemaddr;
+    void *pmemaddr;
     size_t mapped_len;
     int is_pmem;
     size_t used;
