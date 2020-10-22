@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <libpmem.h>
+#include <string>
 
 namespace PMSkiplist {
 
@@ -17,12 +18,15 @@ public:
     Arena();
     ~Arena();
     void Sync();
-    void* Allocate();
+    char* Allocate(size_t bytes);
+    char* GetRoot();
 
 private:
     char *pmemaddr;
     size_t mapped_len;
     int is_pmem;
+    size_t used;
+    size_t free;
 };
 
 }   // PMSkiplist

@@ -1,13 +1,17 @@
 #include "arena.h"
 
 namespace PMSkiplist {
+    static const size_t pmem_len = 80 * 1024 * 1024 * 1024;
+    static const string path = "/mnt/persist-memory/pmem_fs_lhd"
 
 Arena::Arena() {
-    if ((pmemaddr = pmem_map_file(PATH, PMEM_LEN, PMEM_FILE_CREATE,
+    if ((pmemaddr = pmem_map_file(path.c_str(), pmem_len, PMEM_FILE_CREATE,
                                   0666, &mapped_len, &is_pmem)) == NULL) {
         perror("pmem_map_file");
         exit(1);
     }
+    free = pmem_len;
+    used = mapped_len;
 }
 
 Arena::~Arena() {
@@ -23,7 +27,17 @@ void Arena::Sync() {
     }
 }
 
-void *Arena::Allocate() {
-    return NULL;
+char *Arena::Allocate(size_t bytes) {
+    char *result = NULL;
+    if (free >= bytes) {
+        free -= bytes;
+        result = pmemaddr + used;
+        used += bytes;
+    }
+    return result;
+
+char *Arena::GetRoot() {
+    return pmemaddr;
+}
 }
 }   //PMSkiplist
