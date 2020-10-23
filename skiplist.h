@@ -9,21 +9,11 @@ namespace PMSkiplist {
 
 struct Node {
     size_t key_len;
-    std::string *key;
+    char *key;
     size_t value_len;
-    std::string *value;
+    char *value;
     int node_height;
     Node* next_[1];
-
-    explicit Node(const size_t kl, 
-                  const std::string* k, 
-                  const size_t vl, 
-                  const std::string* v, 
-                  const int h): key_len(kl),
-                                key(k),
-                                value_len(vl),
-                                value(v),
-                                node_height(h) {}
 
     Node* Next(int level) {
         return next_[level];
@@ -49,8 +39,9 @@ private:
     Random rnd_;
     Node* head_;
     Node* scan_tmp_;
+    int now_height_;
 
-    Node* NewNode(const size_t key_len, const std::string key, const size_t value_len, const std::string value, int height);
+    Node* NewNode(const std::string key, const std::string value, const int height);
     int RandomHeight();
 };
 }   // PMSkiplist
