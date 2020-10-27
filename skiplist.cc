@@ -9,6 +9,8 @@ Skiplist::Skiplist(): rnd_(0xdeadbeef),
                       scan_tmp_(NULL),
                       now_height_(0) {}
 
+Skiplist::~Skiplist() {}
+
 Node* Skiplist::NewNode(const std::string key, const std::string value, const int height) {
     size_t tmp = sizeof(Node) + sizeof(Node*) * (height - 1);
     Node *n = (Node*)arena_.Allocate(tmp);
