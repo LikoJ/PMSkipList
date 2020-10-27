@@ -49,7 +49,7 @@ int Skiplist::RandomHeight() {
     return height;
 }
 
-bool Skiplist::KeyIsAfterNode(const std::string key, Node* n) {
+bool Skiplist::KeyIsAfterNode(const std::string key, const Node* n) {
     if (n == nullptr) {
         return false;
     }
@@ -89,8 +89,8 @@ bool Skiplist::Write(const std::string key, const std::string value) {
     int height = RandomHeight();
     Node* n = NewNode(key, value, height);
 
-    if (height > GetMaxHeight()) {
-        for (int i = GetMaxHeight(); i < height; i++) {
+    if (height > now_height_) {
+        for (int i = now_height_; i < height; i++) {
             prev[i] = head_;
         }
         now_height_ = height;
