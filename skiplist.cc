@@ -4,26 +4,26 @@ namespace PMSkiplist {
 
 static const int max_height = 32;   // The max height of PMSkiplist
 
-Skiplist::SkipList(): rnd_(0xdeadbeef),
+Skiplist::Skiplist(): rnd_(0xdeadbeef),
                       head_(NewNode("", "", max_height)),
                       scan_tmp_(NULL),
                       now_height_(0) {}
 
 Node* Skiplist::NewNode(const std::string key, const std::string value, const int height) {
     size_t tmp = sizeof(Node) + sizeof(Node*) * (height - 1);
-    Node *n = arena_.Allocate(tmp);
+    Node *n = (Node*)arena_.Allocate(tmp);
     n->key_len = key.length();
     if (n->key_len == 0) {
         n->key = NULL;
     } else {
-        n->key = arena_.Allocate(n->key_len);
+        n->key = (char*)arena_.Allocate(n->key_len);
         memcpy(n->key, key.data(), n->key_len);
     }
     n->value_len = value.length();
     if (n->value_len == 0) {
         n->value = NULL;
     } else {
-        n->value = arena_.Allocate(n->value_len);
+        n->value = (char*)arena_.Allocate(n->value_len);
         memcpy(n->value, value.data(), n->value_len);
     }
 
