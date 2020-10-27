@@ -102,7 +102,7 @@ bool Skiplist::Write(const std::string key, const std::string value) {
     }
 
     if (x != NULL) {
-        std::string keystr(x->key, x->key_length);
+        std::string keystr(x->key, x->key_len);
         if (keystr == key) {
             //Delete
         }

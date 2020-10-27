@@ -27,8 +27,8 @@ struct Node {
 
 class Skiplist {
 public:
-    SkipList();
-    ~SkipList();
+    Skiplist();
+    ~Skiplist();
 
     bool Write(const std::string key, const std::string value);
     bool Read(const std::string key, std::string* value);
