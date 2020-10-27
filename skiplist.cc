@@ -32,7 +32,7 @@ Node* Skiplist::NewNode(const std::string key, const std::string value, const in
         n->SetNext(i, NULL);
     }
 
-    arena_.Sync(n->key, n->ken_len);
+    arena_.Sync(n->key, n->key_len);
     arena_.Sync(n->value, n->value_len);
     arena_.Sync(n, tmp);
     return n;
@@ -97,7 +97,7 @@ bool Skiplist::Write(const std::string key, const std::string value) {
     }
 
     for (int i = 0; i < height; i++) {
-        n->NoBarrier_SetNext(i, prev[i]->NoBarrier_Next(i));
+        n->SetNext(i, prev[i]->Next(i));
         prev[i]->SetNext(i, n);
     }
 
