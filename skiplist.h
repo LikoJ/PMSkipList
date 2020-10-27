@@ -42,6 +42,8 @@ private:
     int now_height_;
 
     Node* NewNode(const std::string key, const std::string value, const int height);
+    Node* FindGreaterOrEqual(const std::string key, Node** prev);
+    bool KeyIsAfterNode(const std::string key, const Node* n);
     int RandomHeight();
 };
 }   // PMSkiplist

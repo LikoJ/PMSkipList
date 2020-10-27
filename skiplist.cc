@@ -49,6 +49,38 @@ int Skiplist::RandomHeight() {
     return height;
 }
 
+bool Skiplist::KeyIsAfterNode(const std::string key, Node* n) {
+    if (n == nullptr) {
+        return false;
+    }
+    std::string tmp(n->key, n->key_len);
+    if (key >= tmp) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+Node* Skiplist::FindGreaterOrEqual(const std::string key, Node** prev) {
+    Node* x = head_;
+    int level = now_height_ - 1;
+    while (true) {
+        Node* next = x->Next(level);
+        if (KeyIsAfterNode(key, next)) {
+            // Keep searching in this list
+            x = next;
+        } else {
+            if (prev != nullptr) prev[level] = x;
+            if (level == 0) {
+                return next;
+            } else {
+                // Switch to next list
+                level--;
+            }
+        }
+    }
+}
+
 bool Skiplist::Write(const std::string key, const std::string value) {
     Node* prev[max_height];
     Node* x = FindGreaterOrEqual(key, prev);    // if x->key == key, update needs delete; else insert
