@@ -7,7 +7,7 @@ static const int max_height = 32;   // The max height of PMSkiplist
 Skiplist::Skiplist(): rnd_(0xdeadbeef),
                       head_(NewNode("", "", max_height)),
                       scan_tmp_(NULL),
-                      now_height_(0) {}
+                      now_height_(1) {}
 
 Skiplist::~Skiplist() {}
 
