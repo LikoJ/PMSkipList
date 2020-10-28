@@ -55,7 +55,7 @@ public:
     std::string Value();
     void Seek(const std::string key);
 private:
-    const Skiplist* list_;
+    Skiplist* list_;
     Node* node_;
 };
 }   // PMSkiplist
