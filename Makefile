@@ -6,15 +6,15 @@ FLAGS = -g -std=c++11
 LIBS = -lpmem
 
 OBJECT := arena.o \
-		  skiplist.o
+          skiplist.o
 
 TARGET = libpmskiplist.a
 
 $(TARGET) : $(OBJECT)
-	$(AR) $@ $^
+    $(AR) $@ $^
 
 .cpp.o :
-	$(CC) -c $(FLAGS) -o $@ $< $(LIBS)
+    $(CC) -c $(FLAGS) -o $@ $< $(LIBS)
 
 clean:
-	rm $(TARGET) *.o
+    rm $(TARGET) *.o
