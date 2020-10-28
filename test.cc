@@ -12,6 +12,7 @@ int main() {
         value = "v";
         value += std::to_string(i);
         l.Write(key, value);
+        std::cout << key << ": " << value << std::endl;
     }
     for (int i = 1; i < 10; i++, i++) {
         key = "k";
@@ -19,6 +20,7 @@ int main() {
         value = "v";
         value += std::to_string(i);
         l.Write(key, value);
+        std::cout << key << ": " << value << std::endl;
     }
 
     std::cout << "---------Read---------" << std::endl;
@@ -47,6 +49,7 @@ int main() {
         value = "u";
         value += std::to_string(i);
         l.Write(key, value);
+        std::cout << key << ": " << value << std::endl;
     }
     
     std::cout << "---------Read---------" << std::endl;
