@@ -62,5 +62,15 @@ int main() {
             std::cout << key << ": not found!" << std::endl;
         }
     }
+
+    std::cout << "---------Scan---------" << std::endl;
+    PMSkiplist::Iterator it(&l);
+    key = "k";
+    key += std::to_string(4);
+    for (it->Seek(key); it->Valid(); it->Next()) {
+        key = it->Key();
+        value = it->Value();
+        std::cout << key << ": " << value << std::endl;
+    }
     return 0;
 }
