@@ -1,16 +1,63 @@
-#include "arena.h"
 #include <iostream>
-struct Node {
-    int len;
-    char *key;
-};
+#include <string>
+#include "skiplist.h"
 int main() {
-    PMSkiplist::Arena a;
-    Node *n = a.Allocate(sizeof(Node));
-    n->key = a.Allocate(sizeof(char) * 50);
-    n->len = 50;
-    strcpy(n->key, "hello, world!");
-    a.Sync(n, sizeof(Node));
-    a.Sync(n->key, sizeof(char) * 50);
+    PMSkiplist::Skiplist l;
+    std::string key, value;
+
+    std::cout << "--------Insert--------" << std::endl;
+    for (int i = 0; i < 10; i++, i++) {
+        key = "k";
+        key += std::to_string(i);
+        value = "v";
+        value += std::to_string(i);
+        l.Write(key, value);
+    }
+    for (int i = 1; i < 10; i++, i++) {
+        key = "k";
+        key += std::to_string(i);
+        value = "v";
+        value += std::to_string(i);
+        l.Write(key, value);
+    }
+
+    std::cout << "---------Read---------" << std::endl;
+    for (int i = 0; i < 10; i++) {
+        key = "k";
+        key += std::to_string(i);
+        if (l.Read(key, &value)) {
+            std::cout << key << ": " << value << std::endl;
+        } else {
+            std::cout << key << ": not found!" << std::endl;
+        }
+    }
+
+    // not found
+    key = "k";
+    if (l.Read(key, &value)) {
+        std::cout << key << ": " << value << std::endl;
+    } else {
+        std::cout << key << ": not found!" << std::endl;
+    }
+
+    std::cout << "--------Update--------" << std::endl;
+    for (int i = 0; i < 10; i += 3) {
+        key = "k";
+        key += std::to_string(i);
+        value = "u";
+        value += std::to_string(i);
+        l.Write(key, value);
+    }
+    
+    std::cout << "---------Read---------" << std::endl;
+    for (int i = 0; i < 10; i++) {
+        key = "k";
+        key += std::to_string(i);
+        if (l.Read(key, &value)) {
+            std::cout << key << ": " << value << std::endl;
+        } else {
+            std::cout << key << ": not found!" << std::endl;
+        }
+    }
     return 0;
 }
