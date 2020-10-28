@@ -56,7 +56,7 @@ bool Skiplist::KeyIsAfterNode(const std::string key, const Node* n) {
         return false;
     }
     std::string tmp(n->key, n->key_len);
-    if (key >= tmp) {
+    if (key > tmp) {
         return true;
     } else {
         return false;
