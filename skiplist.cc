@@ -64,10 +64,10 @@ bool Skiplist::KeyIsAfterNode(const std::string key, const Node* n) {
 }
 
 Node* Skiplist::FindGreaterOrEqual(const std::string key, Node** prev) {
-    Node* x = head_;
+    Node *x = head_;
     int level = now_height_ - 1;
     while (true) {
-        Node* next = x->Next(level);
+        Node *next = x->Next(level);
         if (KeyIsAfterNode(key, next)) {
             // Keep searching in this list
             x = next;
@@ -84,12 +84,12 @@ Node* Skiplist::FindGreaterOrEqual(const std::string key, Node** prev) {
 }
 
 bool Skiplist::Write(const std::string key, const std::string value) {
-    Node* prev[max_height];
-    Node* x = FindGreaterOrEqual(key, prev);    // if x->key == key, update needs delete; else insert
+    Node *prev[max_height];
+    Node *x = FindGreaterOrEqual(key, prev);    // if x->key == key, update needs delete; else insert
 
     // Insert
     int height = RandomHeight();
-    Node* n = NewNode(key, value, height);
+    Node *n = NewNode(key, value, height);
 
     if (height > now_height_) {
         for (int i = now_height_; i < height; i++) {
@@ -101,13 +101,43 @@ bool Skiplist::Write(const std::string key, const std::string value) {
     for (int i = 0; i < height; i++) {
         n->SetNext(i, prev[i]->Next(i));
         prev[i]->SetNext(i, n);
+        prev[i] = n;
     }
 
     if (x != NULL) {
         std::string keystr(x->key, x->key_len);
         if (keystr == key) {
             //Delete
+            for (int i = 0; i < x->node_height; i++) {
+                prev[i]->SetNext(i, x->Next(i));
+            }
         }
     }
+}
+
+bool Skiplist::Read(const std::string key, std::string *value) {
+    Node *x = FindGreaterOrEqual(key, NULL);
+    if (x == NULL) {
+        value = NULL;
+        return false;
+    }
+    std::string xkey(x->key, x->key_len);
+    std::string xvalue(x->value, x->value_len;)
+
+    if (xkey == key) {
+        *value = xvalue;
+        return true;
+    } else {
+        value = NULL;
+        return false;
+    }
+}
+
+bool Skiplist::ScanStart(const std::string key) {
+    return false;
+}
+
+bool Skiplist::ScanNext(const std::string key) {
+    return false;
 }
 }   // PMSkiplist
