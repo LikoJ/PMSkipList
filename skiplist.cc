@@ -159,7 +159,7 @@ std::string Iterator::Value() {
 }
 
 void Iterator::Seek(const std::string key) {
-    node_ = FindGreaterOrEqual(key, NULL);
+    node_ = list_->FindGreaterOrEqual(key, NULL);
 }
 
 }   // PMSkiplist
