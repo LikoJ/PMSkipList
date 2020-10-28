@@ -26,25 +26,37 @@ struct Node {
 };
 
 class Skiplist {
+    friend class Iterator;
 public:
     Skiplist();
     ~Skiplist();
 
     bool Write(const std::string key, const std::string value);
     bool Read(const std::string key, std::string* value);
-    bool ScanStart(const std::string key);
-    bool ScanNext(const std::string key);
 private:
     Arena arena_;
     Random rnd_;
     Node* head_;
-    Node* scan_tmp_;
     int now_height_;
 
     Node* NewNode(const std::string key, const std::string value, const int height);
     Node* FindGreaterOrEqual(const std::string key, Node** prev);
     bool KeyIsAfterNode(const std::string key, const Node* n);
     int RandomHeight();
+};
+
+class Iterator {
+public:
+    Iterator(Skiplist* list);
+    ~Iterator();
+    bool Valid();
+    void Next();
+    std::string Key();
+    std::string Value();
+    void Seek(const std::string key);
+private:
+    const Skiplist* list_;
+    Node* node_;
 };
 }   // PMSkiplist
 

@@ -6,7 +6,6 @@ static const int max_height = 32;   // The max height of PMSkiplist
 
 Skiplist::Skiplist(): rnd_(0xdeadbeef),
                       head_(NewNode("", "", max_height)),
-                      scan_tmp_(NULL),
                       now_height_(1) {}
 
 Skiplist::~Skiplist() {}
@@ -133,11 +132,34 @@ bool Skiplist::Read(const std::string key, std::string *value) {
     }
 }
 
-bool Skiplist::ScanStart(const std::string key) {
-    return false;
+Iterator::Iterator(Skiplist *list): list_(list),
+                                    node_(list_->head_) {}
+
+Iterator::~Iterator() {}
+
+bool Iterator::Valid() {
+    return node_ != NULL;
 }
 
-bool Skiplist::ScanNext(const std::string key) {
-    return false;
+void Iterator::Next() {
+    assert(Valid());
+    node_ = node_->Next(0);
 }
+
+std::string Iterator::Key() {
+    assert(Valid());
+    std::string key(node_->key, node_->key_len);
+    return key;
+}
+
+std::string Iterator::Value() {
+    assert(Valid());
+    std::string value(node_->value, node_->value_len);
+    return value;
+}
+
+void Iterator::Seek(const std::string key) {
+    node_ = FindGreaterOrEqual(key, NULL);
+}
+
 }   // PMSkiplist
