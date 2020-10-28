@@ -11,10 +11,10 @@ OBJECT := arena.o \
 TARGET = libpmskiplist.a
 
 $(TARGET) : $(OBJECT)
-    $(AR) $@ $^
+	$(AR) $@ $^
 
 .cc.o :
-    $(CC) -c $(FLAGS) -o $@ $< $(LIBS)
+	$(CC) -c $(FLAGS) -o $@ $< $(LIBS)
 
 clean :
-    rm $(TARGET) *.o
+	rm $(TARGET) *.o
