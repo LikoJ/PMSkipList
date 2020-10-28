@@ -122,7 +122,7 @@ bool Skiplist::Read(const std::string key, std::string *value) {
         return false;
     }
     std::string xkey(x->key, x->key_len);
-    std::string xvalue(x->value, x->value_len;)
+    std::string xvalue(x->value, x->value_len);
 
     if (xkey == key) {
         *value = xvalue;
