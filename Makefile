@@ -13,8 +13,8 @@ TARGET = libpmskiplist.a
 $(TARGET) : $(OBJECT)
     $(AR) $@ $^
 
-.cpp.o :
+.cc.o :
     $(CC) -c $(FLAGS) -o $@ $< $(LIBS)
 
-clean:
+clean :
     rm $(TARGET) *.o
