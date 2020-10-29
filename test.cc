@@ -76,8 +76,8 @@ int main() {
         std::cout << key << ": " << value << std::endl;
     }
 
-    std::cout << "--------Delete--------" << std::endl;
-    for (int i = 0; i < 10; i++) {
+    std::cout << "-Delete-from-k0-to-k5-" << std::endl;
+    for (int i = 0; i < 6; i++) {
         key = "k";
         key += std::to_string(i);
         l.Delete(key);
