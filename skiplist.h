@@ -33,6 +33,7 @@ public:
 
     bool Write(const std::string key, const std::string value);
     bool Read(const std::string key, std::string* value);
+    bool Delete(const std::string key);
 private:
     Arena arena_;
     Random rnd_;

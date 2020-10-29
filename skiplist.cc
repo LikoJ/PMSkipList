@@ -112,6 +112,7 @@ bool Skiplist::Write(const std::string key, const std::string value) {
             }
         }
     }
+    return true;
 }
 
 bool Skiplist::Read(const std::string key, std::string *value) {
@@ -128,6 +129,23 @@ bool Skiplist::Read(const std::string key, std::string *value) {
         return true;
     } else {
         value = NULL;
+        return false;
+    }
+}
+
+bool Skiplist::Delete(const std::string key) {
+    Node *prev[max_height];
+    Node *x = FindGreaterOrEqual(key, prev);
+    if (x == NULL) {
+        return false;
+    }
+    std::string xkey(x->key, x->key_len);
+    if (xkey == key) {
+        for (int i = 0; i < x->node_height; i++) {
+            prev[i]->SetNext(i, x->Next(i));
+        }
+        return true;
+    } else {
         return false;
     }
 }
