@@ -55,6 +55,7 @@ public:
     std::string Key();
     std::string Value();
     void Seek(const std::string key);
+    void SeekToFirst();
 private:
     Skiplist* list_;
     Node* node_;

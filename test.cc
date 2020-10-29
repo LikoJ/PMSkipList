@@ -70,7 +70,7 @@ int main() {
     for (it.Seek(key); it.Valid(); it.Next()) {
         key = it.Key();
         value = it.Value();
-        if (value > "k9") {
+        if (key > "k9") {
             break;
         }
         std::cout << key << ": " << value << std::endl;
@@ -85,10 +85,10 @@ int main() {
     }
 
     std::cout << "---------Scan---------" << std::endl;
-    pmskiplist::Iterator itr(&l);
-    for (; itr.Valid(); itr.Next()) {
-        key = itr.Key();
-        value = itr.Value();
+    it.SeekToFirst();
+    for (; it.Valid(); it.Next()) {
+        key = it.Key();
+        value = it.Value();
         std::cout << key << ": " << value << std::endl;
     }
     return 0;

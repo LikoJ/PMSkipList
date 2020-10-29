@@ -151,7 +151,7 @@ bool Skiplist::Delete(const std::string key) {
 }
 
 Iterator::Iterator(Skiplist *list): list_(list),
-                                    node_(list_->head_->Next(0)) {}
+                                    node_(list_->head_) {}
 
 Iterator::~Iterator() {}
 
@@ -178,6 +178,10 @@ std::string Iterator::Value() {
 
 void Iterator::Seek(const std::string key) {
     node_ = list_->FindGreaterOrEqual(key, NULL);
+}
+
+void Iterator::SeekToFirst() {
+    node_ = list_->head_->Next(0);
 }
 
 }   // pmskiplist
