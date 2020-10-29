@@ -5,7 +5,7 @@
 #include "arena.h"
 #include "random.h"
 
-namespace PMSkiplist {
+namespace pmskiplist {
 
 struct Node {
     size_t key_len;
@@ -58,6 +58,6 @@ private:
     Skiplist* list_;
     Node* node_;
 };
-}   // PMSkiplist
+}   // pmskiplist
 
 #endif  // PMSKIPLIST_SKIPLIST_H

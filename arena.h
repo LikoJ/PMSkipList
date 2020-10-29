@@ -12,7 +12,7 @@
 #include <cstdint>
 #include <string>
 
-namespace PMSkiplist {
+namespace pmskiplist {
 
 class Arena {
 public:
@@ -29,5 +29,5 @@ private:
     size_t free;
 };
 
-}   // PMSkiplist
+}   // pmskiplist
 #endif // PMSKIPLIST_ARENA_H

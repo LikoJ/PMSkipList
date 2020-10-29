@@ -2,7 +2,7 @@
 #include <string>
 #include "skiplist.h"
 int main() {
-    PMSkiplist::Skiplist l;
+    pmskiplist::Skiplist l;
     std::string key, value;
 
     std::cout << "--------Insert--------" << std::endl;
@@ -64,7 +64,7 @@ int main() {
     }
 
     std::cout << "---------Scan---------" << std::endl;
-    PMSkiplist::Iterator it(&l);
+    pmskiplist::Iterator it(&l);
     key = "k";
     key += std::to_string(4);
     for (it.Seek(key); it.Valid(); it.Next()) {

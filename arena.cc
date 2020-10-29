@@ -1,6 +1,6 @@
 #include "arena.h"
 
-namespace PMSkiplist {
+namespace pmskiplist {
     static const size_t pmem_len = 80L * 1024 * 1024 * 1024;
     static const std::string path = "/mnt/persist-memory/pmem_fs_lhd/test.pool";
 
@@ -36,4 +36,4 @@ void Arena::Sync(void *start, size_t len) {
     }
 }
 
-}   // PMSkiplist
+}   // pmskiplist

@@ -1,7 +1,7 @@
 #ifndef PMSKIPLIST_RANDOM_H
 #define PMSKIPLIST_RANDOM_H
 #include <cstdint>
-namespace PMSkiplist {
+namespace pmskiplist {
 
 class Random {  // from leveldb
     private:
@@ -34,5 +34,5 @@ class Random {  // from leveldb
     uint32_t Skewed(int max_log) { return Uniform(1 << Uniform(max_log + 1)); }
 };
 
-}   // PMSkiplist
+}   // pmskiplist
 #endif  // PMSKIPLIST_RANDOM_H

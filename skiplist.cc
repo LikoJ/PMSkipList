@@ -1,8 +1,8 @@
 #include "skiplist.h"
 
-namespace PMSkiplist {
+namespace pmskiplist {
 
-static const int max_height = 32;   // The max height of PMSkiplist
+static const int max_height = 32;   // The max height of pmskiplist
 
 Skiplist::Skiplist(): rnd_(0xdeadbeef),
                       head_(NewNode("", "", max_height)),
@@ -162,4 +162,4 @@ void Iterator::Seek(const std::string key) {
     node_ = list_->FindGreaterOrEqual(key, NULL);
 }
 
-}   // PMSkiplist
+}   // pmskiplist
