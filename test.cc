@@ -63,13 +63,32 @@ int main() {
         }
     }
 
-    std::cout << "---------Scan---------" << std::endl;
+    std::cout << "--Scan-from-k4-to-k9--" << std::endl;
     pmskiplist::Iterator it(&l);
     key = "k";
     key += std::to_string(4);
     for (it.Seek(key); it.Valid(); it.Next()) {
         key = it.Key();
         value = it.Value();
+        if (value > "k9") {
+            break;
+        }
+        std::cout << key << ": " << value << std::endl;
+    }
+
+    std::cout << "--------Delete--------" << std::endl;
+    for (int i = 0; i < 10; i++) {
+        key = "k";
+        key += std::to_string(i);
+        l.Delete(key);
+        std::cout << key << ": " << "delete" << std::endl;
+    }
+
+    std::cout << "---------Scan---------" << std::endl;
+    pmskiplist::Iterator itr(&l);
+    for (; itr.Valid(); itr.Next()) {
+        key = itr.Key();
+        value = itr.Value();
         std::cout << key << ": " << value << std::endl;
     }
     return 0;

@@ -151,7 +151,7 @@ bool Skiplist::Delete(const std::string key) {
 }
 
 Iterator::Iterator(Skiplist *list): list_(list),
-                                    node_(list_->head_) {}
+                                    node_(list_->head_->Next(0)) {}
 
 Iterator::~Iterator() {}
 
