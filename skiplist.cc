@@ -154,7 +154,7 @@ Iterator* Skiplist::NewIterator() {
     return new Iterator(this);
 }
 
-explicit Iterator::Iterator(Skiplist *list): list_(list),
+Iterator::Iterator(Skiplist *list): list_(list),
                                     node_(list_->head_) {}
 
 Iterator::~Iterator() {}
