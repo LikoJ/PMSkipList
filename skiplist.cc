@@ -42,8 +42,8 @@ int64_t Skiplist::NewNode(const std::string key, const std::string value, const 
     if (n->key_len == 0) {
         n->key = NULL;
     } else {
-        n->key = (char*)arena_.Allocate(n->key_len, key_offset);
-        memcpy(n->key, key.data(), n->key_len);
+        n->key = (int64_t)arena_.Allocate(n->key_len, key_offset);
+        memcpy((char *)n->key, key.data(), n->key_len);
         arena_.Sync(n->key, n->key_len);
         n->key = key_offset;
     }
@@ -52,8 +52,8 @@ int64_t Skiplist::NewNode(const std::string key, const std::string value, const 
     if (n->value_len == 0) {
         n->value = NULL;
     } else {
-        n->value = (char*)arena_.Allocate(n->value_len, value_offset);
-        memcpy(n->value, value.data(), n->value_len);
+        n->value = (int64_t)arena_.Allocate(n->value_len, value_offset);
+        memcpy((char *)n->value, value.data(), n->value_len);
         arena_.Sync(n->value, n->value_len);
         n->value = value_offset;
     }
