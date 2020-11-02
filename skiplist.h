@@ -25,6 +25,8 @@ struct Node {
     }
 };
 
+class Iterator;
+
 class Skiplist {
     friend class Iterator;
 public:
