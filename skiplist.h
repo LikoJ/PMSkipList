@@ -30,7 +30,7 @@ class Iterator;
 class Skiplist {
     friend class Iterator;
 public:
-    Skiplist();
+    explicit Skiplist();
     ~Skiplist();
 
     bool Write(const std::string key, const std::string value);

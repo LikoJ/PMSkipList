@@ -64,12 +64,12 @@ int main() {
     }
 
     std::cout << "--Scan-from-k4-to-k9--" << std::endl;
-    pmskiplist::Iterator it(&l);
+    pmskiplist::Iterator *it = l.NewIterator();
     key = "k";
     key += std::to_string(4);
-    for (it.Seek(key); it.Valid(); it.Next()) {
-        key = it.Key();
-        value = it.Value();
+    for (it->Seek(key); it->Valid(); it->Next()) {
+        key = it->Key();
+        value = it->Value();
         if (key > "k9") {
             break;
         }
@@ -85,11 +85,12 @@ int main() {
     }
 
     std::cout << "---------Scan---------" << std::endl;
-    it.SeekToFirst();
-    for (; it.Valid(); it.Next()) {
-        key = it.Key();
-        value = it.Value();
+    it->SeekToFirst();
+    for (; it->Valid(); it->Next()) {
+        key = it->Key();
+        value = it->Value();
         std::cout << key << ": " << value << std::endl;
     }
+    delete it;
     return 0;
 }
