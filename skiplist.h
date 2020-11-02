@@ -17,6 +17,7 @@ struct Node {
     int64_t next_[1];
 
     int64_t Next(int level) {
+        assert(level >= 0 && level < node_height);
         return next_[level];
     }
 
