@@ -43,8 +43,8 @@ void Arena::Recover(std::ifstream &ifs) {
 }
 
 void Arena::Save(std::ofstream &ofs) {
-    ofs << used;
-    ofs << free;
+    ofs << used << std::endl;
+    ofs << free << std::endl;
 }
 
 }   // pmskiplist

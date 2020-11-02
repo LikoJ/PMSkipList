@@ -12,6 +12,7 @@
 #include <cstdint>
 #include <string>
 #include <fstream>
+#include <iostream>
 
 namespace pmskiplist {
 

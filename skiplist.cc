@@ -24,8 +24,8 @@ Skiplist::Skiplist(std::string name): rnd_(0xdeadbeef),
 Skiplist::~Skiplist() {
     std::ofstream ofs(manifest);
     arena_.Save(ofs);
-    ofs << head_;
-    ofs << now_height_;
+    ofs << head_ << std::endl;
+    ofs << now_height_ << std::endl;
 }
 
 int64_t Skiplist::NewNode(const std::string key, const std::string value, const int height) {
