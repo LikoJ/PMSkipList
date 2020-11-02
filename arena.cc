@@ -38,11 +38,13 @@ void Arena::Sync(void *start, size_t len) {
 }
 
 void Arena::Recover(std::ifstream &ifs) {
-
+    ifs >> used;
+    ifs >> free;
 }
 
 void Arena::Save(std::ofstream &ofs) {
-
+    ofs << used;
+    ofs << free;
 }
 
 }   // pmskiplist

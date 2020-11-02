@@ -6,27 +6,26 @@ static const int max_height = 32;   // The max height of pmskiplist
 static const std::string path = "/mnt/persist-memory/pmem_fs_lhd/";
 
 Skiplist::Skiplist(std::string name): rnd_(0xdeadbeef),
-                                      manifest(path + name) {
-    head_ = NewNode("", "", max_height);
-    now_height_ = 1;
-    /*std::ifstream ifs(manifest);
+                                      manifest(path + name + ".fest") {
+    std::ifstream ifs(manifest);
     if (!ifs.is_open()) {
         // Create new pmskiplist
         head_ = NewNode("", "", max_height);
         now_height_ = 1;
     } else {
+        // Recover
         arena_.Recover(ifs);
         ifs >> head_;
         ifs >> now_height_;
         ifs.close();
-    }*/
+    }
 }
 
 Skiplist::~Skiplist() {
-    /*std::ofstream ofs(manifest);
+    std::ofstream ofs(manifest);
     arena_.Save(ofs);
     ofs << head_;
-    ofs << now_height_;*/
+    ofs << now_height_;
 }
 
 int64_t Skiplist::NewNode(const std::string key, const std::string value, const int height) {
