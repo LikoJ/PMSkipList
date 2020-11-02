@@ -10,17 +10,17 @@ namespace pmskiplist {
 
 struct Node {
     size_t key_len;
-    char *key;
+    int64_t key;
     size_t value_len;
-    char *value;
+    int64_t value;
     int node_height;
-    Node* next_[1];
+    int64_t next_[1];
 
-    Node* Next(int level) {
+    int64_t Next(int level) {
         return next_[level];
     }
 
-    void SetNext(int level, Node* x) {
+    void SetNext(int level, int64_t x) {
         assert(level >= 0 && level < node_height);
         next_[level] = x;
     }
@@ -41,11 +41,11 @@ public:
 private:
     Arena arena_;
     Random rnd_;
-    Node* head_;
+    int64_t head_;
     int now_height_;
     std::string manifest;
 
-    Node* NewNode(const std::string key, const std::string value, const int height);
+    int64_t NewNode(const std::string key, const std::string value, const int height);
     Node* FindGreaterOrEqual(const std::string key, Node** prev);
     bool KeyIsAfterNode(const std::string key, const Node* n);
     int RandomHeight();

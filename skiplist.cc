@@ -29,10 +29,14 @@ Skiplist::~Skiplist() {
     ofs << now_height_;*/
 }
 
-Node* Skiplist::NewNode(const std::string key, const std::string value, const int height) {
+int64_t Skiplist::NewNode(const std::string key, const std::string value, const int height) {
     size_t tmp = sizeof(Node) + sizeof(Node*) * (height - 1);
-    void *node_offset, *key_offset, *value_offset;
+    int64_t node_offset, key_offset, value_offset;
     Node *n = (Node*)arena_.Allocate(tmp, node_offset);
+
+    for (int i = 0; i < height; i++) {
+        n->SetNext(i, -1);
+    }
 
     n->key_len = key.length();
     if (n->key_len == 0) {
@@ -60,7 +64,7 @@ Node* Skiplist::NewNode(const std::string key, const std::string value, const in
     }
 
     arena_.Sync(n, tmp);
-    return (Node*)node_offset;
+    return node_offset;
 }
 
 int Skiplist::RandomHeight() {
@@ -78,7 +82,7 @@ bool Skiplist::KeyIsAfterNode(const std::string key, const Node* n) {
     if (n == nullptr) {
         return false;
     }
-    std::string tmp((char*)arena_.Translate((void*)n->key), n->key_len);
+    std::string tmp((char*)arena_.Translate(n->key), n->key_len);
     if (key > tmp) {
         return true;
     } else {
@@ -87,14 +91,14 @@ bool Skiplist::KeyIsAfterNode(const std::string key, const Node* n) {
 }
 
 Node* Skiplist::FindGreaterOrEqual(const std::string key, Node** prev) {
-    Node *x = (Node*)arena_.Translate((void*)head_);
+    Node *x = (Node*)arena_.Translate(head_);
     int level = now_height_ - 1;
     while (true) {
         Node *next;
-        if (x->Next(level) == NULL) {
+        if (x->Next(level) == -1) {
             next = NULL;
         } else {
-            next = (Node*)arena_.Translate((void*)x->Next(level));
+            next = (Node*)arena_.Translate(x->Next(level));
         }
         if (KeyIsAfterNode(key, next)) {
             // Keep searching in this list
@@ -117,8 +121,8 @@ bool Skiplist::Write(const std::string key, const std::string value) {
 
     // Insert
     int height = RandomHeight();
-    Node *offset = NewNode(key, value, height);
-    Node *n = (Node*)arena_.Translate((void *)offset);
+    int64_t offset = NewNode(key, value, height);
+    Node *n = (Node*)arena_.Translate(offset);
 
     if (height > now_height_) {
         for (int i = now_height_; i < height; i++) {
@@ -134,7 +138,7 @@ bool Skiplist::Write(const std::string key, const std::string value) {
     }
 
     if (x != NULL) {
-        std::string keystr((char*)arena_.Translate((void*)x->key), x->key_len);
+        std::string keystr((char*)arena_.Translate(x->key), x->key_len);
         if (keystr == key) {
             //Delete
             for (int i = 0; i < x->node_height; i++) {
@@ -151,8 +155,8 @@ bool Skiplist::Read(const std::string key, std::string *value) {
         value = NULL;
         return false;
     }
-    std::string xkey((char*)arena_.Translate((void*)x->key), x->key_len);
-    std::string xvalue((char*)arena_.Translate((void*)x->value), x->value_len);
+    std::string xkey((char*)arena_.Translate(x->key), x->key_len);
+    std::string xvalue((char*)arena_.Translate(x->value), x->value_len);
 
     if (xkey == key) {
         *value = xvalue;
@@ -169,7 +173,7 @@ bool Skiplist::Delete(const std::string key) {
     if (x == NULL) {
         return false;
     }
-    std::string xkey((char*)arena_.Translate((void*)x->key), x->key_len);
+    std::string xkey((char*)arena_.Translate(x->key), x->key_len);
     if (xkey == key) {
         for (int i = 0; i < x->node_height; i++) {
             prev[i]->SetNext(i, x->Next(i));
@@ -195,18 +199,18 @@ bool Iterator::Valid() {
 
 void Iterator::Next() {
     assert(Valid());
-    node_ = (Node*)list_->arena_.Translate((void*)node_->Next(0));
+    node_ = (Node*)list_->arena_.Translate(node_->Next(0));
 }
 
 std::string Iterator::Key() {
     assert(Valid());
-    std::string key(list_->arena_.Translate((void*)node_->key), node_->key_len);
+    std::string key(list_->arena_.Translate(node_->key), node_->key_len);
     return key;
 }
 
 std::string Iterator::Value() {
     assert(Valid());
-    std::string value(list_->arena_.Translate((void*)node_->value), node_->value_len);
+    std::string value(list_->arena_.Translate(node_->value), node_->value_len);
     return value;
 }
 
@@ -215,7 +219,7 @@ void Iterator::Seek(const std::string key) {
 }
 
 void Iterator::SeekToFirst() {
-    node_ = (Node*)list_->arena_.Translate((void*)list_->head_->Next(0));
+    node_ = (Node*)list_->arena_.Translate(list_->head_->Next(0));
 }
 
 }   // pmskiplist

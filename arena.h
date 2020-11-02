@@ -20,8 +20,8 @@ public:
     Arena();
     ~Arena();
     void Sync(void *start, size_t len);
-    void* Allocate(size_t bytes, void *offset);
-    inline void* Translate(void* offset) {
+    void* Allocate(size_t bytes, int64_t &offset);
+    inline void* Translate(int64_t offset) {
         return (pmemaddr + offset);
     };
     void Recover(std::ifstream &ifs);

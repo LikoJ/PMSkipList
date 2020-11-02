@@ -18,12 +18,12 @@ Arena::~Arena() {
     pmemaddr = NULL;
 }
 
-void *Arena::Allocate(size_t bytes, void *offset) {
+void *Arena::Allocate(size_t bytes, int64_t &offset) {
     void *result = NULL;
     if (free >= bytes) {
         free -= bytes;
         result = pmemaddr + used;
-        offset = used;
+        offset = (int64_t)used;
         used += bytes;
     }
     return result;
