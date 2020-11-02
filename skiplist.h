@@ -1,6 +1,7 @@
 #ifndef PMSKIPLIST_SKIPLIST_H
 #define PMSKIPLIST_SKIPLIST_H
 #include <string>
+#include <fstream>
 #include <assert.h>
 #include "arena.h"
 #include "random.h"
@@ -30,7 +31,7 @@ class Iterator;
 class Skiplist {
     friend class Iterator;
 public:
-    explicit Skiplist();
+    explicit Skiplist(std::string name);
     ~Skiplist();
 
     bool Write(const std::string key, const std::string value);
@@ -42,6 +43,7 @@ private:
     Random rnd_;
     Node* head_;
     int now_height_;
+    std::string manifest;
 
     Node* NewNode(const std::string key, const std::string value, const int height);
     Node* FindGreaterOrEqual(const std::string key, Node** prev);

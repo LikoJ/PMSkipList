@@ -18,11 +18,12 @@ Arena::~Arena() {
     pmemaddr = NULL;
 }
 
-void *Arena::Allocate(size_t bytes) {
+void *Arena::Allocate(size_t bytes, void *offset) {
     void *result = NULL;
     if (free >= bytes) {
         free -= bytes;
         result = pmemaddr + used;
+        offset = used;
         used += bytes;
     }
     return result;
@@ -34,6 +35,14 @@ void Arena::Sync(void *start, size_t len) {
     } else {
         pmem_msync(start, len);
     }
+}
+
+void Arena::Recover(std::ifstream &ifs) {
+
+}
+
+void Arena::Save(std::ofstream &ofs) {
+
 }
 
 }   // pmskiplist

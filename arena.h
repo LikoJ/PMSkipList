@@ -11,6 +11,7 @@
 #include <libpmem.h>
 #include <cstdint>
 #include <string>
+#include <fstream>
 
 namespace pmskiplist {
 
@@ -19,7 +20,12 @@ public:
     Arena();
     ~Arena();
     void Sync(void *start, size_t len);
-    void* Allocate(size_t bytes);
+    void* Allocate(size_t bytes, void *offset);
+    inline void* Translate(void* offset) {
+        return (pmemaddr + offset);
+    };
+    void Recover(std::ifstream &ifs);
+    void Save(std::ofstream &ofs);
 
 private:
     void *pmemaddr;
