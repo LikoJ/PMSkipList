@@ -126,7 +126,7 @@ bool Skiplist::Write(const std::string key, const std::string value) {
 
     if (height > now_height_) {
         for (int i = now_height_; i < height; i++) {
-            prev[i] = head_;
+            prev[i] = (Node*)arena_.Translate(head_);
         }
         now_height_ = height;
     }
@@ -204,13 +204,13 @@ void Iterator::Next() {
 
 std::string Iterator::Key() {
     assert(Valid());
-    std::string key(list_->arena_.Translate(node_->key), node_->key_len);
+    std::string key((char*)list_->arena_.Translate(node_->key), node_->key_len);
     return key;
 }
 
 std::string Iterator::Value() {
     assert(Valid());
-    std::string value(list_->arena_.Translate(node_->value), node_->value_len);
+    std::string value((char*)list_->arena_.Translate(node_->value), node_->value_len);
     return value;
 }
 
