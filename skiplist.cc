@@ -219,7 +219,8 @@ void Iterator::Seek(const std::string key) {
 }
 
 void Iterator::SeekToFirst() {
-    node_ = (Node*)list_->arena_.Translate(list_->head_->Next(0));
+    node_ = (Node*)list_->arena_.Translate(list_->head_);
+    node_ = node_->Next();
 }
 
 }   // pmskiplist
