@@ -34,10 +34,6 @@ int64_t Skiplist::NewNode(const std::string key, const std::string value, const 
     int64_t node_offset, key_offset, value_offset;
     Node *n = (Node*)arena_.Allocate(tmp, node_offset);
 
-    for (int i = 0; i < height; i++) {
-        n->SetNext(i, -1);
-    }
-
     n->key_len = key.length();
     if (n->key_len == 0) {
         n->key = -1;
@@ -60,7 +56,7 @@ int64_t Skiplist::NewNode(const std::string key, const std::string value, const 
 
     n->node_height = height;
     for (int i = 0; i < n->node_height; i++) {
-        n->SetNext(i, NULL);
+        n->SetNext(i, -1);
     }
 
     arena_.Sync(n, tmp);
