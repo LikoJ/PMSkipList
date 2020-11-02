@@ -195,7 +195,11 @@ bool Iterator::Valid() {
 
 void Iterator::Next() {
     assert(Valid());
-    node_ = (Node*)list_->arena_.Translate(node_->Next(0));
+    if (node_->Next(0) == -1) {
+        node_ = NULL;
+    } else {
+        node_ = (Node*)list_->arena_.Translate(node_->Next(0));
+    }
 }
 
 std::string Iterator::Key() {
