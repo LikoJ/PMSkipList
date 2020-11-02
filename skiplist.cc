@@ -40,21 +40,21 @@ int64_t Skiplist::NewNode(const std::string key, const std::string value, const 
 
     n->key_len = key.length();
     if (n->key_len == 0) {
-        n->key = NULL;
+        n->key = -1;
     } else {
         n->key = (int64_t)arena_.Allocate(n->key_len, key_offset);
         memcpy((char *)n->key, key.data(), n->key_len);
-        arena_.Sync(n->key, n->key_len);
+        arena_.Sync((void*)n->key, n->key_len);
         n->key = key_offset;
     }
 
     n->value_len = value.length();
     if (n->value_len == 0) {
-        n->value = NULL;
+        n->value = -1;
     } else {
         n->value = (int64_t)arena_.Allocate(n->value_len, value_offset);
         memcpy((char *)n->value, value.data(), n->value_len);
-        arena_.Sync(n->value, n->value_len);
+        arena_.Sync((void*)n->value, n->value_len);
         n->value = value_offset;
     }
 
